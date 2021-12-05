@@ -19,7 +19,7 @@
 				(down . 8)
 				(forward . 2))) 900))
   
-  (with-open-file (in "~/Projects/advent/3/input")
+  (with-open-file (in "input")
     (labels ((read-cs (out)
 	       (if in
 		   (let ((id (read in nil)))
