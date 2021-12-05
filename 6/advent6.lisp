@@ -15,18 +15,26 @@
 	(setf (sbit out i) (funcall f n (length in)))))
     out))
 
-(defun gamma (in)
-  (median (lambda (n c)
-	   (if (> n (/ c 2)) 1 0))
-	 in))
+(defun match (f in)
+  (dotimes (i (length (first in)))
+    (let ((x (median f in)))
+      (setf in (remove-if-not (lambda (y) (= (sbit x i) (sbit y i))) in))
+      (when (null (rest in))
+	(return-from match (first in)))))
+  nil)
+  
+(defun oxy (in)
+  (match (lambda (n c)
+	   (if (>= n (/ c 2)) 1 0))
+    in))
 
-(defun epsilon (in)
-  (median (lambda (n c)
-	   (if (> n (/ c 2)) 0 1))
-	 in))
+(defun co2 (in)
+  (match (lambda (n c)
+	   (if (>= n (/ c 2)) 0 1))
+    in))
 
-(defun power (in)
-  (* (dec (gamma in)) (dec (epsilon in))))
+(defun life (in)
+  (* (dec (oxy in)) (dec (co2 in))))
 
 (defun bits (s)
   (let* ((count (length s))
@@ -49,7 +57,7 @@
 			   (bits "01010")))
   
 (defun test ()
-  (assert (= (power *data*) 198))
+  (assert (= (life *data*) 230))
   
   (with-open-file (in "input")
     (labels ((parse-input (out)
@@ -58,4 +66,4 @@
 		     (parse-input (cons (bits v) out))
 		     (nreverse out)))))
       (let ((in (parse-input nil)))
-	(format t "answer: ~a ~a~%" (length in) (power in))))))
+	(format t "answer: ~a ~a~%" (length in) (life in))))))
