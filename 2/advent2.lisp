@@ -19,7 +19,8 @@
     (apply #'depth-inc1 (rec ms nil))))
 
 (defun test ()
-  (assert (= (depth-inc2 199 200 208 210 200 207 240 269 260 263) 5))
+  (assert (= (depth-inc2 199 200 208 210 200 207 240 269 260 263)
+	     5))
 
   (with-open-file (in "input")
     (labels ((read-ms (out)

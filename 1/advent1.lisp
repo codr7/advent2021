@@ -9,7 +9,8 @@
     (rec ms nil 0)))
 
 (defun test ()
-  (assert (= (depth-inc 199 200 208 210 200 207 240 269 260 263) 7))
+  (assert (= (depth-inc 199 200 208 210 200 207 240 269 260 263)
+	     7))
 
   (with-open-file (in "input")
     (labels ((read-ms (out)
@@ -19,4 +20,3 @@
 		     (nreverse out)))))
       (let ((ms (read-ms nil)))
 	(format t "answer: ~a ~a~%" (length ms) (apply #'depth-inc ms))))))
-		      

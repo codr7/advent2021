@@ -15,7 +15,8 @@
 				(forward . 8)
 				(up . 3)
 				(down . 8)
-				(forward . 2))) 150))
+				(forward . 2)))
+	     150))
   
   (with-open-file (in "input")
     (labels ((read-cs (out)
