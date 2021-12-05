@@ -11,7 +11,7 @@
 (defun test ()
   (assert (= (depth-inc 199 200 208 210 200 207 240 269 260 263) 7))
 
-  (with-open-file (in "~/Projects/advent/1/input")
+  (with-open-file (in "input")
     (labels ((read-ms (out)
 	       (let ((m (read-line in nil)))
 		 (if m
