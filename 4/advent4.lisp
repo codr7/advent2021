@@ -26,5 +26,5 @@
 		     (if id
 			 (read-cs (cons (cons id (read in)) out))
 			 (nreverse out))))))
-      (let ((ms (read-cs nil)))
-	(format t "answer: ~a ~a~%" (length ms) (apply #'get-pos ms))))))
+      (let ((cs (read-cs nil)))
+	(format t "answer: ~a ~a~%" (length cs) (apply #'get-pos cs))))))
