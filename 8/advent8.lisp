@@ -26,7 +26,8 @@
   (dotimes (i (length b))
     (when (= (aref b i) n)
       (setf (aref b i) -1)
-      (return-from mark-board))))
+      (return-from mark-board t)))
+  nil)
 
 (defun board-won? (b)
   (dotimes (row 5)
@@ -55,10 +56,17 @@
 
 (defun mark-boards (bs ns)
   (dolist (n ns)
-    (dolist (b bs)
-      (mark-board b n)
-      (when (board-won? b)
-	(return-from mark-boards (score-board b n))))))
+    (if (rest bs)
+      (setf bs
+	    (remove-if (lambda (b)
+			 (and (mark-board b n) (board-won? b)))
+		       bs))
+      (progn
+	(let ((b (first bs)))
+	  (mark-board (first bs) n)
+	  (when (board-won? b)
+	    (return-from mark-boards (score-board b n)))))))
+  nil)
 
 (defun parse-row (s)
     (with-input-from-string (in s)
@@ -70,7 +78,7 @@
 	(rec nil))))
 
 (defun test ()
-  (assert (= (mark-boards *boards* *numbers*) 4512))
+  (assert (= (mark-boards *boards* *numbers*) 1924))
   
   (with-open-file (in "input")
     (let ((ns (mapcar #'parse-integer (split-sequence:split-sequence #\, (read-line in nil))))
